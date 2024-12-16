@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'app_themes.dart';  // Hier werden die verschiedenen Themes importiert
+import 'app_themes.dart'; // Importiere die Themes
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _currentTheme = AppThemes.lightTheme; // Standard-Theme
+  ThemeData _currentTheme = AppThemes.lightTheme; // Standard-Theme ist hell
 
   ThemeData get currentTheme => _currentTheme;
 
   void toggleTheme() {
-    // Wechsel zwischen den Themes
     if (_currentTheme == AppThemes.lightTheme) {
-      _currentTheme = AppThemes.darkTheme;  // Wechsel zu einem dunklen Theme
+      _currentTheme = AppThemes.darkTheme; // Zu Dunkelthema wechseln
     } else {
-      _currentTheme = AppThemes.lightTheme;  // Zurück zum hellen Theme
+      _currentTheme = AppThemes.lightTheme; // Zurück zum Hellthema
     }
     notifyListeners();
   }

@@ -22,3 +22,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/dumbbell.png  # Hier das Bild richtig angeben
+    - assets/flags/en.png
+    - assets/flags/de.png

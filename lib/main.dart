@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'locale_provider.dart'; // Sprachwechsel-Provider
-import 'app_localizations.dart'; // Lokalisierungs-Klasse
-import 'app_themes.dart'; // App Themes
-import 'theme_provider.dart'; // Theme Provider
+import 'locale_provider.dart'; // LocaleProvider importieren
+import 'theme_provider.dart'; // ThemeProvider importieren
+import 'home_page.dart'; // Die Startseite
+import 'settings_page.dart'; // SettingsPage importieren
+import 'profile_page.dart'; // ProfilPage importieren
+
+// Füge die fehlenden Imports hinzu
+import 'package:flutter_localizations/flutter_localizations.dart'; // Lokalisierungs-Pakete
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()), // LocaleProvider hinzufügen
         ChangeNotifierProvider(create: (_) => ThemeProvider()), // ThemeProvider hinzufügen
       ],
       child: const MyApp(),
@@ -23,57 +26,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final localeProvider = Provider.of<LocaleProvider>(context);
 
     return MaterialApp(
       title: 'Athlory Gym App',
+      theme: themeProvider.currentTheme, // Aktuelles Theme
       locale: localeProvider.currentLocale, // Aktuelle Sprache
       supportedLocales: const [Locale('en'), Locale('de')],
-      theme: themeProvider.currentTheme, // Aktuelles Theme
       localizationsDelegates: const [
-        AppLocalizationsDelegate(), // Eigene Lokalisierung
-        GlobalMaterialLocalizations.delegate, // Material Lokalisierung
+        GlobalMaterialLocalizations.delegate, // Material Design Lokalisierung
         GlobalWidgetsLocalizations.delegate, // Widgets Lokalisierung
         GlobalCupertinoLocalizations.delegate, // Cupertino Lokalisierung
       ],
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final appLocalization = AppLocalizations.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appLocalization.translate('appTitle')),
-        actions: [
-          IconButton(
-            icon: Icon(
-              localeProvider.currentLocale.languageCode == 'en'
-                  ? Icons.flag
-                  : Icons.flag_circle,
-            ),
-            onPressed: localeProvider.toggleLocale,
-            tooltip: appLocalization.translate('toggleLanguage'),
-          ),
-          IconButton(
-            icon: const Icon(Icons.brightness_6),
-            onPressed: themeProvider.toggleTheme, // Theme wechseln
-            tooltip: appLocalization.translate('toggleTheme'),
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text(appLocalization.translate('hello')),
-      ),
+      home: const HomePage(), // Startseite
+      routes: {
+        '/settings': (context) => const SettingsPage(), // SettingsPage Route
+        '/profile': (context) => const ProfilePage(), // ProfilPage Route
+      },
     );
   }
 }
