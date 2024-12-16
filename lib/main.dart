@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'locale_provider.dart'; // LocaleProvider importieren
-import 'theme_provider.dart'; // ThemeProvider importieren
-import 'home_page.dart'; // Die Startseite
-import 'settings_page.dart'; // SettingsPage importieren
-import 'profile_page.dart'; // ProfilPage importieren
-
-// Füge die fehlenden Imports hinzu
-import 'package:flutter_localizations/flutter_localizations.dart'; // Lokalisierungs-Pakete
+import 'locale_provider.dart';
+import 'theme_provider.dart';
+import 'auth_provider.dart'; // AuthProvider importieren
+import 'home_page.dart';
+import 'login_page.dart';
+import 'registration_page.dart';
+import 'settings_page.dart';
+import 'profile_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()), // LocaleProvider hinzufügen
-        ChangeNotifierProvider(create: (_) => ThemeProvider()), // ThemeProvider hinzufügen
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()), // AuthProvider hinzufügen
       ],
       child: const MyApp(),
     ),
@@ -31,18 +33,21 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Athlory Gym App',
-      theme: themeProvider.currentTheme, // Aktuelles Theme
-      locale: localeProvider.currentLocale, // Aktuelle Sprache
+      theme: themeProvider.currentTheme,
+      locale: localeProvider.currentLocale,
       supportedLocales: const [Locale('en'), Locale('de')],
       localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate, // Material Design Lokalisierung
-        GlobalWidgetsLocalizations.delegate, // Widgets Lokalisierung
-        GlobalCupertinoLocalizations.delegate, // Cupertino Lokalisierung
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      home: const HomePage(), // Startseite
+      initialRoute: '/',
       routes: {
-        '/settings': (context) => const SettingsPage(), // SettingsPage Route
-        '/profile': (context) => const ProfilePage(), // ProfilPage Route
+        '/': (context) => const HomePage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegistrationPage(),
+        '/settings': (context) => const SettingsPage(),
+        '/profile': (context) => const ProfilePage(),
       },
     );
   }

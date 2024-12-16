@@ -13,13 +13,7 @@ class BasePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          title,
-          style: TextStyle(
-            color: isDarkTheme ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-          ),
-        ),
-        backgroundColor: isDarkTheme ? AppColors.darkPrimary : AppColors.lightPrimary,
+        title: Text(title),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -34,17 +28,13 @@ class BasePage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Container(
-          color: isDarkTheme
-              ? AppColors.darkBackground
-              : AppColors.lightBackground, // Hintergrundfarbe des Menüs
+          color: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: isDarkTheme
-                      ? AppColors.darkSurface
-                      : AppColors.lightSurface, // Header-Hintergrundfarbe
+                  color: isDarkTheme ? AppColors.darkSurface : AppColors.lightSurface,
                 ),
                 child: Text(
                   'Menü',
@@ -57,39 +47,15 @@ class BasePage extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: Icon(
-                  Icons.settings,
-                  color: isDarkTheme
-                      ? AppColors.darkTextPrimary
-                      : AppColors.lightTextPrimary,
-                ),
-                title: Text(
-                  'Settings',
-                  style: TextStyle(
-                    color: isDarkTheme
-                        ? AppColors.darkTextPrimary
-                        : AppColors.lightTextPrimary,
-                  ),
-                ),
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
                 onTap: () {
                   Navigator.pushNamed(context, '/settings');
                 },
               ),
               ListTile(
-                leading: Icon(
-                  Icons.person,
-                  color: isDarkTheme
-                      ? AppColors.darkTextPrimary
-                      : AppColors.lightTextPrimary,
-                ),
-                title: Text(
-                  'Profil',
-                  style: TextStyle(
-                    color: isDarkTheme
-                        ? AppColors.darkTextPrimary
-                        : AppColors.lightTextPrimary,
-                  ),
-                ),
+                leading: const Icon(Icons.person),
+                title: const Text('Profil'),
                 onTap: () {
                   Navigator.pushNamed(context, '/profile');
                 },
